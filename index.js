@@ -93,9 +93,15 @@ const fetchAllRepos = async () => {
         required_approving_review_count: 1
       }
     })
-    await Repo.collaborators.fetch().then(collaborators => collaborators.items.map(collaborator => Repo.collaborators(collaborator.login).remove()))
-    await octo.teams(await octo.orgs(org).teams(teamname).fetch().then(f => f.id)).repos(org, repo.name).add({ permission: "push" })
-    await octo.teams(await octo.orgs(org).teams(admin_team).fetch().then(f => f.id)).repos(org, repo.name).add({ permission: "admin" })
+    await Repo.collaborators.fetch()
+      .catch(e => console.log(e))
+      .then(collaborators => collaborators.items.map(collaborator => Repo.collaborators(collaborator.login).remove()))
+    await octo.teams(await octo.orgs(org).teams(teamname).fetch()
+      .catch(e => console.log(e))
+      .then(f => f.id)).repos(org, repo.name).add({ permission: "push" })
+    await octo.teams(await octo.orgs(org).teams(admin_team).fetch()
+      .catch(e => console.log(e))
+      .then(f => f.id)).repos(org, repo.name).add({ permission: "admin" })
 
     if (repo.license === null)
       await makeOrGetIssue(Repo, "license")
