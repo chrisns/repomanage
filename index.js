@@ -9,6 +9,7 @@ const readFile = Promise.promisify(require("fs").readFile)
 
 const Octokat = require('octokat')
 
+const repoPolicy = require("./repoPolicy.json")
 const token = process.env.GITHUB_TOKEN
 
 const octo = new Octokat({
@@ -84,15 +85,7 @@ const fetchAllRepos = async () => {
 
   repos.forEach(async repo => {
     let Repo = await octo2.repos(repo.owner.login, repo.name)
-    await Repo.branches("master", "protection").add({
-      enforce_admins: true,
-      required_status_checks: null,
-      restrictions: null,
-      dismiss_stale_reviews: true,
-      required_pull_request_reviews: {
-        required_approving_review_count: 1
-      }
-    })
+    await Repo.branches("master", "protection").add(repoPolicy)
     await Repo.collaborators.fetch()
       .catch(e => console.log(e))
       .then(collaborators => collaborators.items.map(collaborator => Repo.collaborators(collaborator.login).remove()))
