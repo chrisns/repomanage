@@ -6,9 +6,10 @@ We officially default to [MIT](https://mit-license.org/), if you feel MIT isn't 
 
 You can easily do this with the web GitHub interface:
 
-1. [Create a new file on this repo](../new/master?filename=license)
-1. `Want to use a template?` should appear to the right, select `MIT License`
-1. Select `Create a new branch for this commit and start a pull request.`
-1. Click `Propose new file`
+1. **[Single click licence add](../community/license/new?template=MIT)**
+1. Enter the organisation's full name
+1. Click **Review and submit**
+1. Click **Commit new file**
+1. Click **Create pull request**
 
 This issue was automatically generated.
